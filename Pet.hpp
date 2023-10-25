@@ -1,5 +1,5 @@
-#ifndef "Pet.hpp"
-#define "Pet.hpp"
+#ifndef PET_HPP
+#define PET_HPP
 
 class Pet(){
     public:
