@@ -1,27 +1,19 @@
 #ifndef PET_HPP
 #define PET_HPP
 
-class Pet : public Animal
+class Pet
 {
-protected:
-    string name;
-    float weight;
-    string type;
-
 public:
-    Pet(string name, float weight, string type) : name(name), weight(weight), type(type) {}
-    virtual float CalculateFee()
-    {
-        return weight * GetLicensingRate();
-    }
-    virtual float GetWeight()
-    {
-        return weight;
-    }
-    virtual string GetType()
-    {
-        return type;
-    }
-    virtual float GetLicensingRate() = 0;
+    Pet(const std::string &name, float weight);
+    virtual ~Pet() {}
+
+    virtual float CalculateFee() const = 0;
+    const std::string &GetName() const;
+    float GetWeight() const;
+
+private:
+    std::string name;
+    float weight;
 };
+
 #endif

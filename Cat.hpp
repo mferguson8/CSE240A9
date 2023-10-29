@@ -1,16 +1,15 @@
-#include "Pet.hpp"
 #ifndef CAT_HPP
 #define CAT_HPP
+
+#include "pet.hpp"
 
 class Cat : public Pet
 {
 public:
-    Cat(string name, float weight) : Pet(name, weight, "cat") {}
-    virtual float GetLicensingRate() override
-    {
-        static float licensingRate = 1.5;
-        return licensingRate;
-    }
+    Cat(const std::string &name, float weight);
+    virtual float CalculateFee() const override;
+
+    static float LicensingRate; // Licensing rate per pound for cats
 };
 
 #endif

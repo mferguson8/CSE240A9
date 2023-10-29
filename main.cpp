@@ -1,40 +1,61 @@
-#include <vector>
 #include <iostream>
-#include "Pet.hpp"
-#include "Dog.hpp"
-#include "Cat.hpp"
+#include <vector>
+#include "pet.hpp"
+#include "dog.hpp"
+#include "cat.hpp"
 
-using namespace std;
+float Dog::LicensingRate = 2.0; // Set licensing rate for dogs
+float Cat::LicensingRate = 1.5; // Set licensing rate for cats
 
-class Animal
+Pet::Pet(const std::string &name, float weight) : name(name), weight(weight) {}
+
+const std::string &Pet::GetName() const
 {
-public:
-    virtual float CalculateFee() = 0;
-    virtual float GetWeight() = 0;
-    virtual string GetType() = 0;
-};
+    return name;
+}
+
+float Pet::GetWeight() const
+{
+    return weight;
+}
+
+Dog::Dog(const std::string &name, float weight) : Pet(name, weight) {}
+
+float Dog::CalculateFee() const
+{
+    return GetWeight() * LicensingRate;
+}
+
+Cat::Cat(const std::string &name, float weight) : Pet(name, weight) {}
+
+float Cat::CalculateFee() const
+{
+    return GetWeight() * LicensingRate;
+}
 
 int main()
 {
-    vector<Animal *> vec;
-    Dog *Bob = new Dog("Bob", 65);
-    Dog *Stan = new Dog("Stan", 37);
-    Cat *Steve = new Cat("Steve", 12);
+    std::vector<Pet *> pvec;
 
-    vec.push_back(dynamic_cast<Animal *>(Bob));
-    vec.push_back(dynamic_cast<Animal *>(Stan));
-    vec.push_back(dynamic_cast<Animal *>(Steve));
+    // Create three pets
+    pvec.push_back(new Dog("Bob", 65));
+    pvec.push_back(new Dog("Stan", 37));
+    pvec.push_back(new Cat("Tom", 12));
 
-    float totalFee = 0.0;
-    for (int i = 0; i < vec.size(); i++)
+    float total_fee = 0.0;
+    for (int i = 0; i < pvec.size(); i++)
     {
-        cout << vec[i]->GetType() << " " << vec[i]->CalculateFee() << endl;
-        totalFee += vec[i]->CalculateFee();
+        std::cout << pvec[i]->GetName() << ' ' << pvec[i]->CalculateFee() << std::endl;
+        total_fee = total_fee + pvec[i]->CalculateFee();
     }
-    cout << "Total fee: " << totalFee << endl;
 
-    delete Bob;
-    delete Stan;
-    delete Steve;
+    // Clean up memory
+    for (int i = 0; i < pvec.size(); i++)
+    {
+        delete pvec[i];
+    }
+
+    std::cout << "total licensing fee = " << total_fee << std::endl;
+
     return 0;
 }
